@@ -25,5 +25,20 @@ app.use('/', indexRouter);
 app.use('/shops', shopsRouter);
 app.use('/users', usersRouter);
 
+// Error Handling
+app.use((error, req, res, next) => {
+    console.log(error);
+    const {
+        message,
+        statusCode = 500,
+        data
+    } = error;
+
+    res.status(statusCode).json({
+        message,
+        data
+    })
+})
+
 
 module.exports = app;

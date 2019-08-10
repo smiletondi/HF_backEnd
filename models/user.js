@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const Shop= require("./shop");
 
 const userSchema = mongoose.Schema({
     email: {
@@ -11,7 +10,7 @@ const userSchema = mongoose.Schema({
         required: true
     },
     preferredShops: [{
-        type: mongoose.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: "Shop"
     }]
 });
