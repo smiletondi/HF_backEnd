@@ -15,7 +15,9 @@ router.get('/', function (req, res, next) {
 });
 
 // /signin  => POST
+// i don't use validation here because i will the email and password anyway
 router.post("/signin", indexController.postSignin);
+
 // /signup  => POST
     const signupChecks = [
       body("email").isEmail().withMessage("Please enter a valid email")
