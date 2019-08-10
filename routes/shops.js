@@ -1,9 +1,10 @@
 const router= require("express").Router();
 
 const shopsController= require("../controllers/shops");
+const isAuth= require("../_helpers/isAuth");
 
 // /shops/ => GET
-router.get("/", shopsController.getShops);
+router.get("/", isAuth, shopsController.getShops);
 
 // /shops/:id => POST
 router.get("/:id", shopsController.getShop);
