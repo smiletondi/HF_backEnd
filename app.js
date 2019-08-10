@@ -22,7 +22,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json()); // Parse application/jsom
 
 app.use('/', indexRouter);
+app.use('/shops', shopsRouter);
 app.use('/users', usersRouter);
-app.use(shopsRouter);
+
 
 module.exports = app;

@@ -8,8 +8,9 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
-router.get("/login", indexController.getLogin);
-// /login  => POST
-router.post("/login", indexController.postLogin);
+// /signin  => POST
+router.post("/signin", indexController.postSignin);
+// /signup  => POST
+router.post("/signup", indexController.postSignup);
 
 module.exports = router;
