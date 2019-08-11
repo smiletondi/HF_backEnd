@@ -5,6 +5,8 @@ const isAuth= require("../_helpers/isAuth");
 
 // /shops/ => GET
 router.get("/", isAuth, shopsController.getShops);
+// /shops/preferredShops => GET
+router.get("/preferredShops", isAuth, shopsController.getPreferredShops);
 
 // /shops/:id => POST
 router.get("/:id", shopsController.getShop);
