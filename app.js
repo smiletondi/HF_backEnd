@@ -11,9 +11,7 @@ const shopsRouter = require("./routes/shops");
 
 var app = express();
 
-app.use(cors({
-    allowedHeaders: "Authorization" // Allowing Authorization for authentication
-}));
+app.use(cors());
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({
