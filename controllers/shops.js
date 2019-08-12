@@ -18,6 +18,29 @@ module.exports.getShop = (req, res, next) => {
         imageUrl: "https://picsum.photos/200?random=1"
     });
 }
+module.exports.getNearbyShops = async (req, res, next) => {
+    const {
+        userId
+    } = req;
+
+    const shopList = await Shop.find();
+
+    User.findById(userId).then(user => {
+        const {
+            preferredShops
+        } = user;
+        const finalList = shopList.map(item => {
+            if(!preferredShops.includes(item))
+                return item;
+        });
+        res.status(200).json(finalList);
+    }).catch(() => {
+        const error = new Error("User No Found, Fetching shops failed");
+        error.statusCode = 404;
+
+        next(error);
+    })
+}
 module.exports.getPreferredShops = (req, res, next) => {
     const {
         userId
