@@ -30,7 +30,7 @@ module.exports.getNearbyShops = async (req, res, next) => {
         userId
     } = req;
 
-    const shopList = await Shop.find();
+    const shopList = await Shop.find().sort({distance: 1});
 
     User.findById(userId).then(user => {
         const {
