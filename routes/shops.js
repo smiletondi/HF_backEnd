@@ -1,7 +1,7 @@
-const router= require("express").Router();
+const router = require("express").Router();
 
-const shopsController= require("../controllers/shops");
-const isAuth= require("../_helpers/isAuth");
+const shopsController = require("../controllers/shops");
+const isAuth = require("../_helpers/isAuth");
 
 // /shops/ => GET
 router.get("/", isAuth, shopsController.getShops);
@@ -11,12 +11,12 @@ router.get("/preferredShops", isAuth, shopsController.getPreferredShops);
 router.get("/nearbyShops", isAuth, shopsController.getNearbyShops);
 
 // /shops/:id => POST
-router.get("/:id", shopsController.getShop);
+router.get("/:id", isAuth, shopsController.getShop);
 
 // /shops/like => PUT
-router.post("/:id/like", shopsController.postLike);
+router.post("/:id/like", isAuth, shopsController.postLike);
 
 // /shops/dislike => PUT
-router.post("/:id/dislike", shopsController.postDislike);
+router.post("/:id/dislike", isAuth, shopsController.postDislike);
 
-module.exports= router;
+module.exports = router;

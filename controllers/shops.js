@@ -2,10 +2,13 @@ const Shop = require("../models/shop");
 const User = require("../models/user");
 
 
+// getShops
 module.exports.getShops = async (req, res, next) => {
     const shopList = await Shop.find();
     res.status(200).json(shopList);
 }
+
+// getShop
 module.exports.getShop = (req, res, next) => {
     const {
         id
@@ -18,6 +21,8 @@ module.exports.getShop = (req, res, next) => {
         imageUrl: "https://picsum.photos/200?random=1"
     });
 }
+
+// getNearbyShops
 module.exports.getNearbyShops = async (req, res, next) => {
     const {
         userId
@@ -29,8 +34,9 @@ module.exports.getNearbyShops = async (req, res, next) => {
         const {
             preferredShops
         } = user;
+        // Filtering preferredShops from nearbyShops
         const finalList = shopList.map(item => {
-            if(!preferredShops.includes(item))
+            if (!preferredShops.includes(item))
                 return item;
         });
         res.status(200).json(finalList);
@@ -41,6 +47,8 @@ module.exports.getNearbyShops = async (req, res, next) => {
         next(error);
     })
 }
+
+// getPreferredShops
 module.exports.getPreferredShops = (req, res, next) => {
     const {
         userId
@@ -55,18 +63,23 @@ module.exports.getPreferredShops = (req, res, next) => {
         next(error);
     })
 }
+
+// postLike
 module.exports.postLike = (req, res, next) => {
     const {
-        id
-    } = req.params;
-    const data = req.body;
-    console.log(data);
+        params: {
+            id
+        },
+        userId
+    } = req;
+    console.log(userId);
     console.log(id);
     res.status(200).json({
-        message: "i like the shop " + id,
-        data
+        message: "i like the shop " + id
     });
 }
+
+// postDislike
 module.exports.postDislike = (req, res, next) => {
     const {
         id
