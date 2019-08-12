@@ -37,13 +37,11 @@ module.exports.getNearbyShops = async (req, res, next) => {
             preferredShops
         } = user;
         // Filtering preferredShops from nearbyShops
-        const finalList = shopList.map(item => {
-            if (!preferredShops.includes(item))
-                return item;
-        });
+        const finalList = shopList.filter(item => !preferredShops.includes(item._id));
+        
         res.status(200).json(finalList);
     }).catch(() => {
-        const error = new Error("User No Found, Fetching shops failed");
+        const error = new Error("User Not Found, Fetching shops failed");
         error.statusCode = 404;
 
         next(error);
@@ -78,8 +76,8 @@ module.exports.postLike = (req, res, next) => {
     console.log(id);
 
     User.findById(userId).then(user => {
-        if(user.preferredShops.includes(ObjectId(id))){
-            const error= new Error("Shop Already exist in preferredShops")
+        if (user.preferredShops.includes(ObjectId(id))) {
+            const error = new Error("Shop Already exist in preferredShops")
             throw error;
         }
         return User.updateOne({
@@ -91,10 +89,49 @@ module.exports.postLike = (req, res, next) => {
             ]
         });
     }).then(rez => {
-        console.log("User updated");
+        console.log("Shop liked, User updated");
 
         res.status(200).json({
-            message: "i like the shop " + id
+            message: "i liked the shop " + id
+        });
+    }).catch((err) => {
+        // console.log(err);
+        const error = new Error("User Not Found");
+        error.statusCode = 404;
+
+        next(err);
+
+    })
+}
+// postRemove
+module.exports.postRemove = (req, res, next) => {
+    const {
+        params: {
+            id
+        },
+        userId
+    } = req;
+    console.log(userId);
+    console.log(id);
+
+    User.findById(userId).then(user => {
+        if (!user.preferredShops.includes(ObjectId(id))) {
+            const error = new Error("Shop doesn't exist in preferredShops")
+            throw error;
+        }
+
+        const newPreferredShops = user.preferredShops.filter(item => !item.equals(ObjectId(id)));
+
+        return User.updateOne({
+            email: user.email
+        }, {
+            preferredShops: newPreferredShops
+        });
+    }).then(rez => {
+        console.log("Shop removed, User updated");
+
+        res.status(200).json({
+            message: "i removed the shop " + id
         });
     }).catch((err) => {
         // console.log(err);
