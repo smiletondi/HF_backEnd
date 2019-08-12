@@ -40,9 +40,11 @@ module.exports.postSignin = (req, res, next) => {
         const token = jwt.sign({
             email: loadedUser.email,
             userId
-        }, "United Remote Coding Challenge", {
-            expiresIn: "1h",
-        });
+        }, "United Remote Coding Challenge", 
+        // {
+        //     expiresIn: "1h",
+        // }
+        );
 
         console.log("User connected");
         return res.status(200).json({

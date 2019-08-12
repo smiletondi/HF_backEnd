@@ -1,3 +1,5 @@
+const ObjectId = require("mongoose").Types.ObjectId;
+
 const Shop = require("../models/shop");
 const User = require("../models/user");
 
@@ -74,9 +76,34 @@ module.exports.postLike = (req, res, next) => {
     } = req;
     console.log(userId);
     console.log(id);
-    res.status(200).json({
-        message: "i like the shop " + id
-    });
+
+    User.findById(userId).then(user => {
+        if(user.preferredShops.includes(ObjectId(id))){
+            const error= new Error("Shop Already exist in preferredShops")
+            throw error;
+        }
+        return User.updateOne({
+            email: user.email
+        }, {
+            preferredShops: [
+                ...user.preferredShops,
+                ObjectId(id)
+            ]
+        });
+    }).then(rez => {
+        console.log("User updated");
+
+        res.status(200).json({
+            message: "i like the shop " + id
+        });
+    }).catch((err) => {
+        // console.log(err);
+        const error = new Error("User Not Found");
+        error.statusCode = 404;
+
+        next(err);
+
+    })
 }
 
 // postDislike
