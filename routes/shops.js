@@ -10,7 +10,7 @@ router.get("/preferredShops", isAuth, shopsController.getPreferredShops);
 // /shops/nearbyShops => GET
 router.get("/nearbyShops", isAuth, shopsController.getNearbyShops);
 
-// /shops/:id => POST
+// /shops/:id => GET
 router.get("/:id", isAuth, shopsController.getShop);
 
 // /shops/:id/like => POST

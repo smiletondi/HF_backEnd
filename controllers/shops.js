@@ -40,7 +40,8 @@ module.exports.getNearbyShops = async (req, res, next) => {
         const finalList = shopList.filter(item => !preferredShops.includes(item._id));
         
         res.status(200).json(finalList);
-    }).catch(() => {
+    }).catch((err) => {
+        console.log(err);
         const error = new Error("User Not Found, Fetching shops failed");
         error.statusCode = 404;
 
@@ -54,7 +55,7 @@ module.exports.getPreferredShops = (req, res, next) => {
         userId
     } = req;
 
-    User.findById(userId).then(user => {
+    User.findById(userId).populate("preferredShops").then(user => {
         res.status(200).json(user.preferredShops);
     }).catch(() => {
         const error = new Error("User No Found, Fetching shops failed");
