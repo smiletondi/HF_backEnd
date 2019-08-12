@@ -30,7 +30,7 @@ module.exports.getNearbyShops = async (req, res, next) => {
         userId
     } = req;
 
-    const shopList = await Shop.find().sort({distance: 1});
+    const shopList = await Shop.find();
 
     User.findById(userId).then(user => {
         const {
@@ -38,6 +38,9 @@ module.exports.getNearbyShops = async (req, res, next) => {
         } = user;
         // Filtering preferredShops from nearbyShops
         const finalList = shopList.filter(item => !preferredShops.includes(item._id));
+
+        // Sorting by distance
+        finalList.sort((a,b)=> a.distance-b.distance)
         
         res.status(200).json(finalList);
     }).catch((err) => {
@@ -56,7 +59,7 @@ module.exports.getPreferredShops = (req, res, next) => {
     } = req;
 
     User.findById(userId).populate("preferredShops").then(user => {
-        res.status(200).json(user.preferredShops);
+        res.status(200).json(user.preferredShops.sort((a,b)=> a.distance-b.distance));
     }).catch(() => {
         const error = new Error("User No Found, Fetching shops failed");
         error.statusCode = 404;
