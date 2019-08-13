@@ -9,9 +9,7 @@ const User= require("../models/user");
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
-  res.render('index', {
-    title: 'Express'
-  });
+  res.send("COding challenge API");
 });
 
 // /signin  => POST
@@ -30,7 +28,7 @@ router.post("/signin", indexController.postSignin);
         })
         .normalizeEmail(),
         body("password").trim()
-          .isLength({min: 5})
+          .isLength({min: 5}).withMessage("Password should be at least 5 characters")
     ]
 router.post("/signup", signupChecks, indexController.postSignup);
 

@@ -64,7 +64,7 @@ module.exports.postSignup = (req, res, next) => {
         error = {
             ...error,
             statusCode: 422,
-            data: errors.array()
+            data: errors.array()[0]
         }
 
         throw error;

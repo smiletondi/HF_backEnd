@@ -5,24 +5,24 @@ const User = require("../models/user");
 
 
 // getShops
-module.exports.getShops = async (req, res, next) => {
-    const shopList = await Shop.find();
-    res.status(200).json(shopList);
-}
+// module.exports.getShops = async (req, res, next) => {
+//     const shopList = await Shop.find();
+//     res.status(200).json(shopList);
+// }
 
 // getShop
-module.exports.getShop = (req, res, next) => {
-    const {
-        id
-    } = req.params;
-    console.log(id);
-    res.status(200).json({
-        id,
-        distance: 5,
-        name: "Aswak Salam",
-        imageUrl: "https://picsum.photos/200?random=1"
-    });
-}
+// module.exports.getShop = (req, res, next) => {
+//     const {
+//         id
+//     } = req.params;
+//     console.log(id);
+//     res.status(200).json({
+//         id,
+//         distance: 5,
+//         name: "Aswak Salam",
+//         imageUrl: "https://picsum.photos/200?random=1"
+//     });
+// }
 
 // getNearbyShops
 module.exports.getNearbyShops = async (req, res, next) => {
@@ -76,8 +76,6 @@ module.exports.postLike = (req, res, next) => {
         },
         userId
     } = req;
-    console.log(userId);
-    console.log(id);
 
     User.findById(userId).then(user => {
         if (user.preferredShops.includes(ObjectId(id))) {
@@ -153,6 +151,7 @@ module.exports.postDislike = (req, res, next) => {
         id
     } = req.params;
     const data = req.body;
+    console.log("Shop disliked, not touching the DB, only changing the UI");
     res.status(200).json({
         message: "i don't like the shop " + id,
         data

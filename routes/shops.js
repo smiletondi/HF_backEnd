@@ -4,14 +4,14 @@ const shopsController = require("../controllers/shops");
 const isAuth = require("../_helpers/isAuth");
 
 // /shops/ => GET
-router.get("/", isAuth, shopsController.getShops);
+// router.get("/", isAuth, shopsController.getShops);
 // /shops/preferredShops => GET
 router.get("/preferredShops", isAuth, shopsController.getPreferredShops);
 // /shops/nearbyShops => GET
 router.get("/nearbyShops", isAuth, shopsController.getNearbyShops);
 
 // /shops/:id => GET
-router.get("/:id", isAuth, shopsController.getShop);
+// router.get("/:id", isAuth, shopsController.getShop);
 
 // /shops/:id/like => POST
 router.post("/:id/like", isAuth, shopsController.postLike);
