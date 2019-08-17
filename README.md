@@ -10,7 +10,7 @@ An application that lists shops nearby and display the preferred shops list base
 * [/shops/nearbyShops]() `GET`
 * [/shops/:id/like]() `POST`
 * [/shops/:id/dislike]() `POST`
-* [/shops/:id/remove]() `POST`
+* [/shops/:id/remove]() `DELETE`
 
 ## Installation 
 

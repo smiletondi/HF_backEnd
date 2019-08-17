@@ -16,7 +16,7 @@ router.get("/nearbyShops", isAuth, shopsController.getNearbyShops);
 // /shops/:id/like => POST
 router.post("/:id/like", isAuth, shopsController.postLike);
 // /shops/:id/remove => POST
-router.post("/:id/remove", isAuth, shopsController.postRemove);
+router.delete("/:id/remove", isAuth, shopsController.postRemove);
 
 // /shops/dislike => POST
 router.post("/:id/dislike", isAuth, shopsController.postDislike);
